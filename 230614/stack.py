@@ -8,9 +8,9 @@ for t in range(1, T+1):
 
     while len(inputlist) >=1:       # 입력된 리스트에서 하나씩 빼면서 진행
         gwal = inputlist.pop()
+        
         if gwal == "(":             # 여는 괄호면
             stack.append(gwal)      # 그냥 넣고
-            forgwal = gwal          # 저장
         else:                       # 닫는 괄호면
             stack.pop()             # 스택에서 하나 빼고
 
@@ -19,6 +19,6 @@ for t in range(1, T+1):
             else:                   # 바로 앞이 닫는 괄호면
                 cnt +=1             # 봉이 하나 끝난 것으로 1을 더해줌
             
-            forgwal = gwal          # 괄호 기억
+        forgwal = gwal          # 괄호 기억
     
     print(f'#{t} {cnt}')
