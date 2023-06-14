@@ -136,3 +136,40 @@ class binarySearchTree:
 ```
 
 </details>
+
+
+<details>
+<summary> 230614 </summary>
+
+# 파이썬 list 연산에 따른 시간 복잡도
+## 시간 복잡도가 O(1)인 연산
+- len(lst)
+- lst[index]
+- lst.append(el)
+- lst.pop()
+
+## 시간 복잡도가 O(k)인 연산
+- lst[i:j]
+
+## 시간 복잡도가 O(n)인 연산
+- el in lst
+- lst.count(el)
+- lst.index(el)
+- el.pop(0)
+  - 맨 앞에 있는 값을 빼기 위해 전체 복사를 한 번 한다.
+  - deque.popleft()는 시간 복잡도가 O(1)으로, 리스트의 맨 앞 요소를 뺄 일이 있으면 deque를 사용하는 것이 좋은 편이다.
+- del lst[i]
+- min, max
+- lst.reverse()
+
+## 시간 복잡도가 O(nlogn)인 연산
+- lst.sort()
+
+&nbsp;
+
+
+# 앞에 걸 뺀다고 무조건 deque를 쓰는 게 좋을까?
+- 앞서 맨 앞에 있는 것을 뺄 때에는 deque를 사용하는 것을 권장한다고 했는데, 무조건 그런 것은 아니다.
+- 만약 양쪽에서 넣고 뺄 일이 있다면 deque를 사용하는 것이 더 효율적이지만, 만약 한 쪽에서만 계속 뺄 것이라면 차라리 리스트를 한 번뒤집고 pop()을 하는 것이 더 짧은 시간이 걸릴 수도 있다.
+
+</details>
