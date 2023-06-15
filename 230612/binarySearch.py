@@ -1,4 +1,3 @@
-
 # 중위 순회를 하면서
 def inorder(node):
     global nodeNum
