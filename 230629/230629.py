@@ -48,5 +48,3 @@ for t in range(1, T+1):
     res = BinTer(binnum, ternum)
 
     print(f'#{t} {res}')
-
-
