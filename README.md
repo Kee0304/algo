@@ -173,3 +173,185 @@ class binarySearchTree:
 - 만약 양쪽에서 넣고 뺄 일이 있다면 deque를 사용하는 것이 더 효율적이지만, 만약 한 쪽에서만 계속 뺄 것이라면 차라리 리스트를 한 번뒤집고 pop()을 하는 것이 더 짧은 시간이 걸릴 수도 있다.
 
 </details>
+
+<details>
+<summary> 230719</summary>
+
+# js로 알고리즘 문제 풀기 기초
+## 입력받기
+- readline와 fs 중 기본적으로 fs를 쓴다
+- 빠르고, 알고리즘 문제 풀이에는 정해진 입력값만 입력 받으면 되기 때문
+
+## 코드
+```javaScript
+// fs모듈 import
+const fs = require('fs');
+const stdin = fs.readFileSync("test.txt").toString().split("\n");
+
+// 실행될 때마다 stdin을 한 줄씩 반환하는 함수
+const input = (() => {
+    let line = 0;
+    return () => stdin[line++];
+})();
+```
+
+### 예제
+1. 테스트 케이스 수가 주어지고, 각 테스트 케이스 별로 두 개의 문자열 숫자가 띄어쓰기로 구분되어 입력될 때, 각각 두 수의 합을 출력하는 코드
+```javaScript
+const fs = require('fs');
+// 리눅스 환경에선 "/dev/stdin"으로 콘솔입력과 같이 입력을 받을 수 있다.
+const stdin = (process.platform === 'linux'
+    ? fs.readFileSync("/dev/stdin").toString()
+    : fs.readFileSync("./input.txt").toString()
+    ).split('\n');
+
+const input = (() => {
+    let line = 0;
+    return () => stdin[line++];
+})();
+
+// 첫 input() 실행 시 테스트 케이스 반환
+let t = input();
+
+// 다음부터는 input() 실행 시 각 테스트 케이스 반환
+while (t--) {
+    const [a,b] = input().split(' ').map(Number);
+    console.log(a + b);
+};
+```
+
+2. 테스트 케이스 수는 주어지지 않고, 숫자의 개수와 테스트 케이스 개수가 주어지고 숫자의 개수만큼 숫자를, 테스크 케이스 숫자만큼 두 개의 숫자가 띄어쓰기로 주어졌을 때 부분합을 구하는 문제
+```javaScript
+const fs = require('fs');
+const stdin = (process.platform === "linux"
+    ? fs.readFileSync('/dev/stdin').toString()
+    : fs.readFileSync('./input2.txt').toString()
+).split('\n');
+
+const input = (() => {
+    let line = 0;
+    return () => stdin[line++]
+})();
+
+const [N, M] = input().split(" ").map(Number);
+const numlst = input().split(" ").map(Number);
+const sumlst = []
+
+for (let i = 0; i < N; i++) {
+    if (i === 0) {
+        sumlst[i] = numlst[i];
+    } else {
+        sumlst[i] = sumlst[i-1]+numlst[i];
+    }
+};
+
+let answer = '';
+
+for (let m = 1; m <= M; m++) {
+    let [st, en] = input().split(" ").map(Number);
+    if (st === 1) {
+        answer += sumlst[en-1].toString() + "\n";
+    } else {
+        answer += (sumlst[en-1] - sumlst[st-2]).toString() + "\n";
+    }
+};
+
+console.log(answer)
+```
+
+## 출력할 때 주의사항
+- 테스트 케이스마다 매번 답을 console.log로 출력하면 시간이 타이트하게 주어진 문제에선 시간 초과가 날 수도 있다.
+- 위의 예제 처럼 answer이라는 빈 문자열에 답을 문자열로 하나씩 추가하고 마지막에 한 번에 출력하는 게 시간이 조금 덜 걸린다.
+
+</details>
+
+<details>
+<summary> 230614 </summary>
+
+# 파이썬 list 연산에 따른 시간 복잡도
+## 시간 복잡도가 O(1)인 연산
+- len(lst)
+- lst[index]
+- lst.append(el)
+- lst.pop()
+
+## 시간 복잡도가 O(k)인 연산
+- lst[i:j]
+
+## 시간 복잡도가 O(n)인 연산
+- el in lst
+- lst.count(el)
+- lst.index(el)
+- el.pop(0)
+  - 맨 앞에 있는 값을 빼기 위해 전체 복사를 한 번 한다.
+  - deque.popleft()는 시간 복잡도가 O(1)으로, 리스트의 맨 앞 요소를 뺄 일이 있으면 deque를 사용하는 것이 좋은 편이다.
+- del lst[i]
+- min, max
+- lst.reverse()
+
+## 시간 복잡도가 O(nlogn)인 연산
+- lst.sort()
+
+&nbsp;
+
+
+# 앞에 걸 뺀다고 무조건 deque를 쓰는 게 좋을까?
+- 앞서 맨 앞에 있는 것을 뺄 때에는 deque를 사용하는 것을 권장한다고 했는데, 무조건 그런 것은 아니다.
+- 만약 양쪽에서 넣고 뺄 일이 있다면 deque를 사용하는 것이 더 효율적이지만, 만약 한 쪽에서만 계속 뺄 것이라면 차라리 리스트를 한 번뒤집고 pop()을 하는 것이 더 짧은 시간이 걸릴 수도 있다.
+
+</details>
+
+<details>
+<summary> 230721</summary>
+
+# js로 알고리즘 문제 풀기 기초
+## 참조 문제
+- 문제를 풀다가 Set 안에 Array를 넣고 싶었다. 그래서 생각 없이 그냥 넣어봤다.
+```javaScript
+for (let row = 0; row < maxRow; row++) {
+    for (let col = 0; col < maxCol; col++) {
+        let stack = [];
+        let visited = new Set();
+        if (mat[row][col] == 1 && visited.has([row,col]) === false) {
+            visited.add([row,col]);
+            stack.push([row,col]);
+            while (true) {
+                if (stack.length === 0) {
+                    break;
+                }
+                let [curRow, curCol] = stack.pop();
+
+                for (let d = 0; d < 4; d++) {
+                    if (0<=curRow+drow[d] && curRow+drow[d] < maxRow && 0<=curCol+dcol[d] && curCol+dcol[d] < maxCol) {
+                        if (mat[curRow+drow[d]][curCol+dcol[d]] == 1 && visited.has([curRow+drow[d],curCol+dcol[d]]) === false) {
+                            stack.push([curRow+drow[d],curRow+drow[d]]);
+                            visited.add([curRow+drow[d],curRow+drow[d]]);
+                        }
+                    }    
+                }
+            }
+        }
+        anset.add(visited.length);
+    }
+};
+```
+- 무한 루프를 돈다. 사실 생각해보면 python에서도 set 안에 list를 넣지 못하게 한다.
+- 결국 내용물만 같지 실제로는 다른 메모리 상에 존재하는 두 리스트이기 때문에 Set에 같은 놈이 여러 개 들어가있는 것 처럼 보인다.
+- 이러한 상황을 피하기 위해선 Set 안에 넣을 것은 immutable한 놈들로 제한하는 것이 좋다. 예를 들어 문자열로 변환해서 저장하자.
+</details>
+
+<details>
+<summary> 230724</summary>
+
+# 파이썬 입력
+- 저번 js 알고리즘 문제 풀이때와 비슷하게, 이번엔 파이썬에서 입력 시간으로 인해 시간 초과가 뜨는 일이 발생하였다.
+- 보통 input()으로 매번 입력을 받았는데, 이는 잘못된 선택이었다.
+- `input = sys.stdin.readline`과 같이 sys.stdin.readline을 이용하는 것이 입력 시간을 단축하는 방법이다.
+## 예제
+```python
+import sys
+inp = sys.stdin.readline
+
+T = int(input())
+```
+</details>
