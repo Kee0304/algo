@@ -9,8 +9,6 @@ def frac(srow,scol, s):
     for row in range(srow,srow+N**(s-1)):
         for col in range(scol,scol+N**(s-1)):
             mat[row][col] = 1
-            if (s-1) == 0:
-                print(row,col)
     
 
     
