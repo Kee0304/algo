@@ -35,7 +35,15 @@ def frac(mrow,mcol, s):
 # K: 흰색 정사각형 가운데에 K*K 정사각형
 # R1, R2: 행
 # C1, C2: 열
-s, N, K, R1, R2, C1, C2 = map(int,inp().split())
+# s, N, K, R1, R2, C1, C2 = map(int,inp().split())
+
+s = 3
+N = 4
+K = 2
+R1 = 0
+R2 = 8
+C1 = 0
+C2 = 8
 
 # 전체 정사각형
 mat = [[0]*(N*(3**(s-1))) for _ in range(N*(3**(s-1)))]
