@@ -72,4 +72,4 @@ while loopcnt < n:
     curArea[minIndex][1] -= 1
     minLuckyArea[minIndex] = minLuckyArea[minIndex] + curArea[minIndex][1]-curArea[minIndex][0]
 
-print(ansList)
+print(" ".join((map(str,ansList))))
