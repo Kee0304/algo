@@ -26,7 +26,6 @@ def goodNum(num):
             secForNum.append(start)
             secForNum.append(end)
 
-
     return [num, (num-secForNum[0])*(secForNum[1]-num)]
 
 print(구간)
