@@ -2,7 +2,7 @@ from collections import deque
 import sys
 
 inp = sys.stdin.readline
-
+sys.setrecursionlimit(100000)
 
 N, M = map(int,inp().split())
 
@@ -42,14 +42,12 @@ def bfs(isBroken, cnt):
                             dq.append((nextRow,nextCol))
                             visited.add((nextRow,nextCol))
                             bfs(True, cnt+1)
-                            visited.remove((nextRow,nextCol))
                             mat[nextRow][nextCol] = "1"
 
                     else:
                         dq.append((nextRow,nextCol))
                         visited.add((nextRow,nextCol))
                         bfs(isBroken, cnt+1)
-                        visited.remove((nextRow,nextCol))
 
 
 bfs(False, 0)
