@@ -374,3 +374,60 @@ T = int(input())
 - 임의의 점에서 시작하여 가장 먼 노드를 찾자. 해당 노드는 지름이 되는 두 노드 중 한 노드일 것이다.
 - 따라서 해당 노드에서 다시 가장 먼 노드를 찾으면 지름을 구할 수 있다.
 </details>
+
+
+<details>
+<summary> 230911</summary>
+
+# 구간의 부분합 구하기
+- 처음 문제를 풀 때, 부분합을 구하기 위해 부분합 리스트를 만들고 갱신해주었다.
+- 이 경우 숫자가 바뀐 인덱스 이후의 부분합을 전부 바꿔주어야 했기 때문에 시간 초과가 발생했다.
+
+## 세그먼트 트리
+- 세그먼트 트리는 리프노드가 수, 그리고 부모 노드는 양쪽 자식 노드의 합을 가지는 binary 트리를 말한다.
+- 이를 이용하면 부분합을 구할 때 시간 복잡도를 O(logN)으로 줄일 수 있다.
+```python
+# 트리 생성
+def init(node, start, end):
+    # node가 리프 노드인 경우 배열의 원소 값을 반환
+    if start == end:
+        tree[node] = l[start]
+        return tree[node]
+    else:
+        tree[node] = (
+            # 왼쪽 서브트리
+            init(node*2, start, (start,end)//2)
+            # 오른쪽 서브트리
+            + init(node*2+1, (start+end)//2+1, end)
+            )
+        return tree[node]
+
+# 구간 합 구하기
+# node가 담당하는 구간 = [start, end]
+# 합을 구해야 하는 구간 = [left, right]
+def subSum(node, start, end, left, right):
+    
+    # 범위가 맞지 않을 때
+    if left > end or right < start:
+        return 0
+
+    # start~end가 left~right에 포함되면
+    if left<=start and end<=right:
+        return tree[node]
+
+    # 왼쪽 서브트리와 오른쪽 서브트리 탐색
+    return subSub(node*2, start, (start+end)//2, left, right) + subSum(node*2+1, (start+end)//2+1, end, left, right)
+
+def update(node, start, end, index, diff):
+    if index < start or index > end:
+        return
+
+    tree[node] += diff
+
+    # 리프노드가 아니면 자식노드들을 변경하러 간다
+    if start != end:
+        update(node*2, start, (start+end)//2, index, diff)
+        update(node*2+1, (start+end)//2+1, end, index, diff)
+
+```
+</details>
