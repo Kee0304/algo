@@ -431,3 +431,69 @@ def update(node, start, end, index, diff):
 
 ```
 </details>
+
+<details>
+<summary> 230904</summary>
+
+# 트리의 지름 구하기
+- 노드와 간선들의 정보가 주어졌을 때, 트리의 지름을 구해야할 때가 있다.
+- 트리의 지름은 임의의 두 노드 사이의 거리 중 가장 먼 거리를 뜻한다.
+- 임의의 점에서 시작하여 가장 먼 노드를 찾자. 해당 노드는 지름이 되는 두 노드 중 한 노드일 것이다.
+- 따라서 해당 노드에서 다시 가장 먼 노드를 찾으면 지름을 구할 수 있다.
+</details>
+
+
+<details>
+<summary> 230911</summary>
+
+# 구간의 최소값 구하기
+## 세그먼트 트리로 최소값 구하기
+- 세그먼트 트리는 리프노드가 수, 그리고 부모 노드는 양쪽 자식 노드 중 작은 값을 가지는 binary 트리를 말한다.
+- 이를 이용하면 최소값을 구할 때 시간 복잡도를 O(logN)으로 줄일 수 있다.
+```python
+# 트리 생성
+def minSegmentTree(node, start, end):
+    if start == end:
+        sTree[node] = leaf[start]
+        return sTree[node]
+
+    mid = (start+end)//2
+    sTree[node] = min(minSegmentTree(node*2,start,mid), minSegmentTree(node*2+1, mid+1, end))
+
+    return sTree[node]
+
+# 최소값 찾기
+def minSTree(node, start, end, left, right):
+    # 범위를 벗어나면 문제에서 가능한 최대값을 반환
+    if left > end or right < start:
+        return 10**9
+    
+    # 구하려는 start~end가 left~right 범위 내에 있으면 해당 노드(자식들의 최소값) 반환
+    if left <= start and end <= right:
+        return sTree[node]
+
+    mid = (start + end) // 2
+    return min(minSTree(node*2, start, mid, left, right), minSTree(node*2+1, mid+1, end, left, right))
+
+# 값 갱신
+def update(node, start, end, index, data):
+    # 존재하지 않는 범위의 값을 바꾸려고 하면 그냥 끝
+    if index < start or index > end:
+        return
+
+    # 리프 노드면 값을 갱신
+    if start == end:
+        leaf[index] = data
+        sTree[node] = data
+        return sTree[node]
+
+    mid = (start+end)//2
+    # 자식 노드들의 값을 갱신하러 감
+    update(node*2, start, mid, index, data)
+    update(node*2+1, mid+1, end, index, data)
+
+    # 자식 노드들의 값이 갱신되면 자기 값을 갱신함
+    sTree[node] = min(sTree[node*2],sTree[node*2+1])
+
+```
+</details>
