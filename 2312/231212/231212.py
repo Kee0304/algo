@@ -22,6 +22,8 @@ for i in range(1,k+1):
     if backIndex:
         # dp[i] = i-coin들에 대해서 가장 작은 값+1 과 dp[i] 중에 작은 값
         dp[i] = min(min(backIndex)+1,dp[i])
+    else:
+        dp[i] = -1
         
 
 ans = None
